@@ -10,9 +10,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Index</title>
     </head>
     <body>
-        <h1><%= new Date() %></h1>
+        <h1>Aula 2</h1>
+        <h2>Vitor Santos</h2>
+        <h3><%= new Date() %></h3>
     </body>
 </html>
