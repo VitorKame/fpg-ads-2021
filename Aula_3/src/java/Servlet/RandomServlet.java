@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package teste;
+package Servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author santo
  */
-@WebServlet(name = "NewServlet", urlPatterns = {"/NewServlet"})
-public class NewServlet extends HttpServlet {
+@WebServlet(name = "RandomServlet", urlPatterns = {"/random.html"})
+public class RandomServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,14 +33,22 @@ public class NewServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet NewServlet</title>");            
+            out.println("<title>JavaEE Servlets</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet NewServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h4><a href='index.html'>Voltar</a></h4>");
+            out.println("<h1>JavaEE</h1>");
+            out.println("<h2>Servlets</h2>");
+            out.println("<h3>Números aleatórios</h3>");
+            out.println("<table border='1'>");
+            for(int i=1; i<=10; i++){
+                int na = ((int)(Math.random() * 100))-50;
+                out.println("<tr><th>"+i+"</th><td>"+na+"</td></tr>");
+            }
+            out.println("</table>");
             out.println("</body>");
             out.println("</html>");
         }
