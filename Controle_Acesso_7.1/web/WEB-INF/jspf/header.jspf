@@ -1,0 +1,9 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<h2>VitorApp!</h2>
+<hr>
+<form>
+<a href="<%= request.getContextPath() %>/index.jsp">Índice</a>
+<a href="<%= request.getContextPath() %>/about.jsp">About Me</a>
+</form>
+<hr>
