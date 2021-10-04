@@ -1,0 +1,90 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<link href="style.css" rel="stylesheet">
+<%
+    String loginName = null;
+    int loginId = 0;
+    int contador = 0;
+
+    String listaUsuarios[] = new String[100];
+    int tabelaMegasena[][] = new int[2][3];
+
+    try {
+        if (application.getAttribute("contador") != null) {
+            contador = (int) application.getAttribute("contador");
+        }
+        if (request.getParameter("session-name") != null) {
+            session.setAttribute("session-name", request.getParameter("session-name"));
+
+            ++contador;
+            application.setAttribute("contador", contador);
+
+            if (application.getAttribute("vetor_usuarios") != null) {
+                listaUsuarios = (String[]) application.getAttribute("vetor_usuarios");
+            }
+            application.setAttribute("vetor_usuarios", listaUsuarios);
+
+            for (int i = 0; i < listaUsuarios.length - 1; i++) {
+                loginId = i;
+                if (listaUsuarios[i] == null) {
+                    break;
+                }
+            }
+            session.setAttribute("session-id", loginId);
+
+            for (int i = 0; i < 2; i++) {
+                for (int j = 0; j < 3; j++) {
+                    tabelaMegasena[i][j] = (int) ((Math.random() * 60) + 1);
+                }
+            }
+
+            session.setAttribute("tabela-megasena", tabelaMegasena);
+
+            response.sendRedirect(request.getRequestURI());
+        } else if (request.getParameter("logout") != null) {
+            session.removeAttribute("session-name");
+            listaUsuarios[loginId] = null;
+            application.setAttribute("vetor_usuarios", listaUsuarios);
+            --contador;
+            application.setAttribute("contador", contador);
+            session.removeAttribute("session-id");
+            session.removeAttribute("tabela-megasena");
+            response.sendRedirect(request.getRequestURI());
+        }
+
+        loginName = (String) session.getAttribute("session-name");
+
+        loginId = (int) session.getAttribute("session-id");
+
+        listaUsuarios = (String[]) application.getAttribute("vetor_usuarios");
+
+        contador = (int) application.getAttribute("contador");
+
+        tabelaMegasena = (int[][]) session.getAttribute("tabela-megasena");
+
+        if (!loginName.equals("")) {
+            listaUsuarios[loginId] = loginName;
+        }
+        application.setAttribute("vetor_usuarios", listaUsuarios);
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+%>
+
+<center>
+    <header class="header">
+        <form>
+            <%if (loginName == null) {%>
+            <input type="text" name="session-name" placeholder="Usuário" class="login" required>
+            <input type="submit" value="Entrar" class="botao">
+            <%} else {%>
+            <a class="nav" href="<%= request.getContextPath()%>/index.jsp">Índice</a>
+            <a class="nav" href="<%= request.getContextPath()%>/vitor-dica-megasena.jsp">Megasena</a>
+            <a class="nav" href="<%= request.getContextPath()%>/vitor.jsp">Sobre Mim</a>
+            <input type="submit" name="logout" value="Sair" class="botao">
+            <%}%>
+        </form>
+    </header>
+    <p class="titulo">vitor santos</p>
+</center>
