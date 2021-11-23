@@ -1,0 +1,24 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<%
+    if(request.getParameter("login")!=null){
+        String userName = request.getParameter("userName");
+        session.setAttribute("userName", userName);
+        response.sendRedirect(request.getRequestURI());
+    }else if(request.getParameter("logout")!=null){
+        session.removeAttribute("userName");
+        response.sendRedirect(request.getRequestURI());
+    }
+%>
+
+<h2>VitorTasksApp!</h2>
+
+<form>
+    <%if(session.getAttribute("userName")==null){%>
+    Nome: <input type="text" name="userName" required/>
+    <input type="submit" name="login" value="Login"/>
+    <%}else{%>
+    Bem Vindo(a), <%= session.getAttribute("userName") %>
+    <input type="submit" name="logout" value="Logout"/>
+    <%}%>
+</form>
