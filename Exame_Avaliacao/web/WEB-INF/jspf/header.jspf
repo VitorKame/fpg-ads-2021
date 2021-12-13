@@ -1,0 +1,29 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page import="Db.VitorJurosDao"%>
+<%@ page pageEncoding="UTF-8" %>
+<%
+    boolean retorno = false;
+    
+    if(request.getParameter("logon") != null) {
+        String userName = request.getParameter("userName");
+        //String password = request.getParameter("password");
+        session.setAttribute("userName", userName);
+        //retorno = VitorJurosDao.verificaUsuario(userName, password);
+        
+        response.sendRedirect(request.getRequestURI());
+    }else if (request.getParameter("logout")!= null){
+        session.removeAttribute("userName");
+        response.sendRedirect(request.getRequestURI());
+    }
+%>
+
+<h1>VitorJurosApp</h1>
+<form>
+    <%if (session.getAttribute("userName")==null) {%>
+    Username: <input type="text" name="userName" required/>
+    Password: <input type="password" name="password" required/>
+    <input type="submit" name="logon" value="LOGAR"/>
+    <%} else {%>
+    <input type="submit" name="logout" value="SAIR"/>
+    <%}%>
+</form>

@@ -4,6 +4,7 @@
  */
 package Db;
 
+import Objeto.Objeto;
 import java.sql.*;
 import java.util.ArrayList;
 import web.VitorDbListener;
@@ -13,15 +14,20 @@ import web.VitorDbListener;
  * @author santo
  */
 public class VitorTasksConnector {
-    public static ArrayList<String> getTasks() throws SQLException{
-        ArrayList<String> list = new ArrayList<>();
-        
+    
+    public static ArrayList<Objeto> getTasks() throws SQLException{
+        ArrayList<Objeto> list = new ArrayList<>();
+        Objeto objeto;
         Connection con = VitorDbListener.getConnection();
         Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT title FROM vitor_tasks");
+        ResultSet rs = stmt.executeQuery("SELECT id, title, user FROM vitor_tasks");
         
         while(rs.next()){
-            list.add(rs.getString("title"));
+            objeto = new Objeto();
+            objeto.setId(rs.getInt("id"));
+            objeto.setTaskName(rs.getString("title"));
+            objeto.setUserName(rs.getString("user"));
+            list.add(objeto);
         }
 
         rs.close();
@@ -39,10 +45,10 @@ public class VitorTasksConnector {
         
     }
     
-    public static void deleteTask(String taskName) throws SQLException{
+    public static void deleteTask(String id) throws SQLException{
         Connection con = VitorDbListener.getConnection();
         Statement stmt = con.createStatement();
-        stmt.execute("DELETE FROM vitor_tasks WHERE title = '"+taskName+"'");
+        stmt.execute("DELETE FROM vitor_tasks WHERE id = '"+id+"'");
         stmt.close();
         con.close();
         

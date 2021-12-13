@@ -4,6 +4,7 @@
     Author     : santo
 --%>
 
+<%@page import="Objeto.Objeto"%>
 <%@page import="web.VitorDbListener"%>
 <%@page import="Db.VitorTasksConnector"%>
 <%@page import="java.lang.Exception"%>
@@ -12,7 +13,7 @@
 <!DOCTYPE html>
 <%
     Exception requestException = null;
-    ArrayList<String> tasks = new ArrayList<>();
+    ArrayList<Objeto> tasks = new ArrayList<>();
     
     try{
         if(request.getParameter("create")!=null){
@@ -23,8 +24,8 @@
         }
         
         if(request.getParameter("delete")!=null){
-           String taskname = request.getParameter("taskName");
-           VitorTasksConnector.deleteTask(taskname);
+           String id = request.getParameter("id");
+           VitorTasksConnector.deleteTask(id);
            response.sendRedirect(request.getRequestURI());
         }
         
@@ -62,12 +63,14 @@
         </form>
         
         <table border="1">
-            <%for(String task : tasks){%>
+            <%for(Objeto task : tasks){%>
             <tr>
-                <td><%= task %></td>
+                <td><%= task.getId() %></td>
+                <td><%= task.getTaskName() %></td>
+                <td><%= task.getUserName() %></td>
                 <td>
                     <form>
-                        <input type="hidden" name="taskName" value="<%= task %>"/>
+                        <input type="hidden" name="id" value="<%= task.getId() %>"/>
                         <input type="submit" name="delete" value="-"/>
                     </form>
                 </td>
