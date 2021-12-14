@@ -34,6 +34,7 @@ public class VitorJurosDao {
     public static boolean verificaUsuario(String userName, String password) throws Exception{
         Connection con = VitorDbListener.getConnection();
         Statement stmt = con.createStatement();
+        
         ResultSet rs = stmt.executeQuery("SELECT * FROM vitor_users u WHERE u.username = "+userName+"' AND u.password = '"+password+"';'");
         boolean retorno = false;
         

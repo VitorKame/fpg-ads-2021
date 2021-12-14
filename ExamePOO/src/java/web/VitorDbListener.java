@@ -17,7 +17,7 @@ import javax.servlet.ServletContextListener;
  */
 public class VitorDbListener implements ServletContextListener {
     public static final String CLASS_NAME = "org.sqlite.JDBC";
-    public static final String URL = "jdbc:sqlite:juros.db";
+    public static final String URL = "jdbc:sqlite:jurosex.db";
     public static Exception exception = null;
     
     public static Connection getConnection() throws Exception {
